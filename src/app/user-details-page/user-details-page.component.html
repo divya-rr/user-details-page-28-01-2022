@@ -1,49 +1,78 @@
 <div class="container mt-5">
-    
-        
-        
-           
+    <div class="card bg-light" style="width: 50rem;">
+    <div class="card-body">
+
+
+
+
+
+    <form [formGroup]="userForm">
+
+
+        <div class="form-group">
+            <label for="username"><strong>Name:</strong></label>
+            <input type="text" id="name" formControlName="name" placeholder="Enter name" class="form-control">
+            <span style="color:red" *ngIf='name?.invalid  && name?.touched'>
+                <span *ngIf="name?.errors?.['required']">Name
+                    is required</span>
+                   
+                    <span *ngIf="name?.errors?.['forbiddenName']">{{name?.errors?.['forbiddenName'].value}} username
+                        is not allowed</span>
+                <span style="color:red" *ngIf='name?.errors?.["pattern"]'> space cannot be added before and after
+                    name and only one space is allowed in between
+                </span>
+            </span>
+
+        </div>
+
+        <div class="form-group mt-3">
+            <label for="email"><strong>Email:</strong></label>
+            <input type="email" id="email" formControlName='email' placeholder="Enter email" class="form-control">
+            <span style="color:red" *ngIf='email?.invalid  && email?.touched '>
+                <!-- <span style="color:red" *ngIf="email?.errors?.['email']">Please enter valid email address</span> -->
+                <span style="color:red" *ngIf="email?.errors?.['required']">Email is required</span>
+                <span style="color:red" *ngIf="email?.errors?.['pattern']">Email is not valid</span>
+                <span *ngIf="email?.errors?.['emailExists']">Email exists
+                </span>
+            </span>
+            <!-- <span class="help-block" *ngIf="!email.valid && email.touched">Please enter a valid email
+                address</span> -->
+        </div>
+        <div class="form-group mt-3">
+            <label for="password"><strong>Password:</strong></label>
+            <input type="password" id="password" formControlName="password" placeholder="Enter password"
+                class="form-control">
+            <span style="color:red" *ngIf='password?.invalid  && password?.touched '>
+                <span *ngIf="password?.errors?.['required']">Password is required</span>
+                <span style="color:red" *ngIf="password?.errors?.['pattern']">password should contain 8
+                    charcters at least one capital,small and special character</span>
+
+            </span>
+
+        </div>
+        <div class="form-group mt-3">
+            <label for="confirmPassword"><strong> Confirm Password:</strong></label>
+            <input type="password" [class.is-invalid]="userForm?.errors?.['misMatch']" id="confirmPassword" formControlName="confirmPassword" placeholder="Enter password"
+                class="form-control">
+            <span *ngIf="userForm?.errors?.['misMatch']">Password misMatch</span>
                 
-                <form  [formGroup]="userForm" novalidate>
-                   
-                   
-                        <div class="form-group" >
-                            <label for="username"><strong>Name:</strong></label>
-                            <input type="text" id="name" formControlName="name" placeholder="Enter name" class="form-control"><span style="color:red" *ngIf=' name && name.invalid  && name.touched'>Name is required  </span>
-                            <span style="color:red" *ngIf=' name && name.invalid  && name.touched && name?.errors?.["pattern"]'> space cannot be added before and after name </span>
-                            !!
-                        </div>
+                  
+        </div>
 
-                        <div class="form-group mt-3">
-                            <label for="email"><strong>Email:</strong></label>
-                            <input type="email" id="email" formControlName='email' placeholder="Enter email"  class="form-control">
-                            <span style="color:red" *ngIf=' email && email.invalid  && email.touched '>Please enter valid email address</span>
-                            <!-- <span class="help-block" *ngIf="!email.valid && email.touched">Please enter a valid email
-                                address</span> -->
-                        </div>
-                        <div class="form-group mt-3">
-                            <label for="password"><strong>Password:</strong></label>
-                            <input type="password" id="password" formControlName="password" placeholder="Enter password" class="form-control">
-                            <span style="color:red" *ngIf=' password && password.invalid  && password.touched && password?.errors?.["minlength"]'> should be of 8 characters </span>
-                            
-                        </div>
+        <div class="form-group mt-3">
+            <label for="phone"><strong>Phone:</strong></label>
+            <input type="number" id="phone" formControlName="phone" class="form-control" placeholder="Enter phone">
+            <span style="color:red"
+                *ngIf='userForm.get("phone")?.errors?.["pattern"] && userForm?.get("phone")?.invalid && userForm?.get("phone")?.touched '>Phone
+                number should be of 10 digits</span>
+        </div>
 
-                        <div class="form-group mt-3">
-                            <label for="phone"><strong>Phone:</strong></label>
-                            <input type="number" id="phone" formControlName="phone" class="form-control" placeholder="Enter phone">
-                            <span style="color:red" *ngIf='this.userForm.get("ph")?.errors?.["minlength"] && this.userForm?.get("ph")?.invalid && this.userForm?.get("ph")?.touched '>Phone number should be of 10 digits</span>
-                        </div>
 
-                    
 
-                    <button class="btn btn-primary mt-5" type="submit">Submit</button>
-                    
-                </form>
-               
+        <button class="btn btn-primary mt-5" type="submit" [disabled]="userForm.invalid">Submit</button>
+        <!-- {{userForm.value|json}} -->
 
-           
-       
-        
-  
+    </form>
+    </div>
+    </div>
 </div>
-<!-- (ngSubmit)="onSubmit(f)" -->
